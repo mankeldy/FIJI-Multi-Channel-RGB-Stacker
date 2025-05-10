@@ -97,7 +97,7 @@ iregex = ".*" + target_substring +".*";
 ////////////////////////////////////////////////
 /////////// Main Analysis Loop /////////////////
 ////////////////////////////////////////////////
-
+File.makeDirectory(inputDir + "/composite_images");
 File.makeDirectory(inputDir+"/composite_images/tifs");
 File.makeDirectory(inputDir+"/composite_images/pngs");
 
