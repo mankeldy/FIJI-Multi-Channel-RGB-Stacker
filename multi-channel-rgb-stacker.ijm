@@ -6,7 +6,7 @@ inputDir=getDirectory("image");
 Dialog.addDirectory("Images path",inputDir);
 
 //Add Channels and Thresholds
-Dialog.addMessage("Add each channel substring (e.g. ch00) and what thresholding you'd like (see Image>Adjust>Threshold):");
+Dialog.addMessage("Add each channel substring (e.g. ch00) and what color you'd like (see Image>Lookup Tables):");
 
 // Getting list of all possible LUTs and appending them to an array to choose from
 // Initialize an with the standard colors that are hard-coded into FIJI
