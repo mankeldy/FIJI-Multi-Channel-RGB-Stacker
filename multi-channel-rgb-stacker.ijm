@@ -78,8 +78,10 @@ for (i=0; i<lengthOf(channel_array); i++) {
 		}
 }
 
+//Adjust brightness
 window_adjusted_boolean = Dialog.getCheckbox();
 
+//Transformation variables
 transformation_boolean = Dialog.getCheckbox();
 transformFile=Dialog.getString();
 transformation_channel=Dialog.getString();
