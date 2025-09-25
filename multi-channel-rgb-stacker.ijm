@@ -1,3 +1,6 @@
+//Clear the Log
+print("\\Clear")
+
 //Create the dialog GUI box for user
 Dialog.create("Multi-channel Microscopy");
 
@@ -45,6 +48,12 @@ for (i=0; i<lengthOf(channel_array); i++) {
 Dialog.addMessage("We can also output a copy where the image histograms have been adjusted so that they go from O-max value rather than 0-255");
 Dialog.addCheckbox("Would you also like a copy with the histogram window adjusted?", true);
 
+//Alignment
+Dialog.addCheckbox("Would you like to align your images using a transformation from MultiStackReg?", false);
+transformDir=getDirectory("image");
+Dialog.addFile("MultiStackReg Transformation File:",transformDir);
+
+Dialog.addString("Reference Channel for Transformation", "None");
 
 //Show the dialog window
 Dialog.show();
@@ -71,6 +80,9 @@ for (i=0; i<lengthOf(channel_array); i++) {
 
 window_adjusted_boolean = Dialog.getCheckbox();
 
+transformation_boolean = Dialog.getCheckbox();
+transformFile=Dialog.getString();
+transformation_channel=Dialog.getString();
 
 //////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
@@ -132,7 +144,13 @@ for (i = 0; i < lengthOf(fileList); i++){
 		    print("opening " + img_path);
 		    open(img_path);
 		    run("8-bit");
-		    setOption("BlackBackground", true);		    
+		    setOption("BlackBackground", true);
+		    
+		    if (transformation_boolean == true && selected_channels[j] != transformation_channel){
+		    	print("Transforming "+imageName_split_by_channel[0] + selected_channels[j] + imageName_split_by_channel[1]);
+		    	run("MultiStackReg", "stack_1="+imageName_split_by_channel[0] + selected_channels[j] + imageName_split_by_channel[1]+" action_1=[Load Transformation File] file_1="+transformFile+" stack_2=None action_2=Ignore file_2=[] transformation=[Rigid Body]");
+		    }
+		   
 		}
 		
 		//Converting images into a stack
@@ -212,6 +230,11 @@ for (i = 0; i < lengthOf(fileList); i++){
 		    open(img_path);
 		    run("8-bit");
 		    setOption("BlackBackground", true);
+		    
+		    if (transformation_boolean == true && selected_channels[j] != transformation_channel){
+		    	print("Transforming "+imageName_split_by_channel[0] + selected_channels[j] + imageName_split_by_channel[1]);
+		    	run("MultiStackReg", "stack_1="+imageName_split_by_channel[0] + selected_channels[j] + imageName_split_by_channel[1]+" action_1=[Load Transformation File] file_1="+transformFile+" stack_2=None action_2=Ignore file_2=[] transformation=[Rigid Body]");
+		    }
 		    
 		    //This is the added bit that sets the window to be the max pixel value
 		    run("Enhance Contrast...", "saturated=0");
