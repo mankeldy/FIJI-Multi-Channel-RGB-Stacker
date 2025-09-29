@@ -239,7 +239,8 @@ for (i = 0; i < lengthOf(fileList); i++){
 		    }
 		    
 		    //This is the added bit that sets the window to be the max pixel value
-		    run("Enhance Contrast...", "saturated=0");
+		    print("Enhancing Contrast for "+imageName_split_by_channel[0] + selected_channels[j] + imageName_split_by_channel[1]);
+		    run("Enhance Contrast...", "saturated=0 normalize");
 		}
 		
 		
