@@ -109,13 +109,17 @@ export_each_channel_boolean = Dialog.getCheckbox();
 //////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
+//// Log Header //////
 
 print("-----Running------");
 print("Here are your variables:");
 print("path = ", inputDir);
 for (i=0; i<lengthOf(selected_channels); i++) {
-	print("C",i+1," = ",selected_channels[i],"    Colors =",selected_colors[i]);
+	print("C",i+1," = ",selected_channels[i],"    Colors =",selected_colors[i], "         Thresholds = [",selected_min_thresholds[i],",",selected_max_threshold,"]");
 }
+
+
+
 
 
 //////////////////////////////////////////////////////////////
@@ -206,10 +210,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 			
 			if (export_each_channel_boolean == true){
 		    	print("Saving channel image as ");
-				channel_tif_savePath = inputDir+"/channel_images/RAW/tifs/"+fov_name+"_C"+stack_channel+"_RAW.tif";
+				channel_tif_savePath = inputDir+"/channel_images/RAW/tifs/"+fov_name+"C"+stack_channel+"_RAW.tif";
 				saveAs("Tiff", channel_tif_savePath);
 		
-				channel_png_savePath = inputDir+"/channel_images/RAW/pngs/"+fov_name+"_C"+stack_channel+"_RAW.png";
+				channel_png_savePath = inputDir+"/channel_images/RAW/pngs/"+fov_name+"C"+stack_channel+"_RAW.png";
 				saveAs("png", channel_png_savePath);
 		    }
 		}
@@ -219,10 +223,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 		run("Make Composite");
 		
 		print("Saving composite image as ");
-		tif_savePath = inputDir+"/composite_images/RAW/tifs/"+fov_name+"_RAW_composite.tif";
+		tif_savePath = inputDir+"/composite_images/RAW/tifs/"+fov_name+"RAW_composite.tif";
 		saveAs("Tiff", tif_savePath);
 		
-		png_savePath = inputDir+"/composite_images/RAW/pngs/"+fov_name+"_RAW_composite.png";
+		png_savePath = inputDir+"/composite_images/RAW/pngs/"+fov_name+"RAW_composite.png";
 		saveAs("png", png_savePath);
 		//Closing the images for this field of view to start it fresh for the next one
 		close("*");
@@ -309,10 +313,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 			
 			if (export_each_channel_boolean == true){
 		    	print("Saving channel image as ");
-				channel_tif_savePath = inputDir+"/channel_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"_C"+stack_channel+"_MANUALLY_ADJUSTED.tif";
+				channel_tif_savePath = inputDir+"/channel_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"C"+stack_channel+"_MANUALLY_ADJUSTED.tif";
 				saveAs("Tiff", channel_tif_savePath);
 		
-				channel_png_savePath = inputDir+"/channel_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"_C"+stack_channel+"_MANUALLY_ADJUSTED.png";
+				channel_png_savePath = inputDir+"/channel_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"C"+stack_channel+"_MANUALLY_ADJUSTED.png";
 				saveAs("png", channel_png_savePath);
 		    }
 		}
@@ -322,10 +326,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 		run("Make Composite");
 		
 		print("Saving composite image as ");
-		tif_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"_MANUALLY_ADJUSTED_composite.tif";
+		tif_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"MANUALLY_ADJUSTED_composite.tif";
 		saveAs("Tiff", tif_savePath);
 		
-		png_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"_MANUALLY_ADJUSTED_composite.png";
+		png_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"MANUALLY_ADJUSTED_composite.png";
 		saveAs("png", png_savePath);
 		//Closing the images for this field of view to start it fresh for the next one
 		close("*");
@@ -423,10 +427,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 			
 			if (export_each_channel_boolean == true){
 		    	print("Saving channel image as ");
-				channel_tif_savePath = inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"_C"+stack_channel+"_AUTOMATICALLY_ADJUSTED.tif";
+				channel_tif_savePath = inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"C"+stack_channel+"_AUTOMATICALLY_ADJUSTED.tif";
 				saveAs("Tiff", channel_tif_savePath);
 		
-				channel_png_savePath = inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"_C"+stack_channel+"__AUTOMATICALLY_ADJUSTED.png";
+				channel_png_savePath = inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"C"+stack_channel+"_AUTOMATICALLY_ADJUSTED.png";
 				saveAs("png", channel_png_savePath);
 		    }
 		}
@@ -436,10 +440,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 		run("Make Composite");
 		
 		print("Saving composite image as ");
-		tif_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"_AUTOMATICALLY_ADJUSTED_composite.tif";
+		tif_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"AUTOMATICALLY_ADJUSTED_composite.tif";
 		saveAs("Tiff", tif_savePath);
 		
-		png_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"_AUTOMATICALLY_ADJUSTED_composite.png";
+		png_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"AUTOMATICALLY_ADJUSTED_composite.png";
 		saveAs("png", png_savePath);
 		//Closing the images for this field of view to start it fresh for the next one
 		close("*");
