@@ -61,6 +61,8 @@ Dialog.addFile("MultiStackReg Transformation File:",transformDir);
 
 Dialog.addString("Reference Channel for Transformation", "None");
 
+Dialog.addCheckbox("Would you like a copy of the individual channel images used to make the merged composite?", false);
+
 //Show the dialog window
 Dialog.show();
 
@@ -101,6 +103,9 @@ transformation_boolean = Dialog.getCheckbox();
 transformFile=Dialog.getString();
 transformation_channel=Dialog.getString();
 
+//Channel variable
+export_each_channel_boolean = Dialog.getCheckbox();
+
 //////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
@@ -137,6 +142,11 @@ File.makeDirectory(inputDir+"/composite_images/RAW");
 File.makeDirectory(inputDir+"/composite_images/RAW/tifs");
 File.makeDirectory(inputDir+"/composite_images/RAW/pngs");
 
+File.makeDirectory(inputDir + "/channel_images");
+File.makeDirectory(inputDir+"/channel_images/RAW");
+File.makeDirectory(inputDir+"/channel_images/RAW/tifs/");
+File.makeDirectory(inputDir+"/channel_images/RAW/pngs/");
+
 for (i = 0; i < lengthOf(fileList); i++){
 	
 	//enters the if-statement for each unique field of view (based on the counter-stain images)
@@ -169,7 +179,7 @@ for (i = 0; i < lengthOf(fileList); i++){
 		    }
 		   
 		}
-		
+		 
 		//Converting images into a stack
 		print("Converting the images to a stack");
 		run("Images to Stack", "name=Image_Stack use");
@@ -192,7 +202,16 @@ for (i = 0; i < lengthOf(fileList); i++){
 			    eval(LUT_command);
 			} else {
 			        print("Using default image color for channel: " + selected_channels[j]);
-			} 
+			}
+			
+			if (export_each_channel_boolean == true){
+		    	print("Saving channel image as ");
+				channel_tif_savePath = inputDir+"/channel_images/RAW/tifs/"+fov_name+"_C"+stack_channel+"_RAW.tif";
+				saveAs("Tiff", channel_tif_savePath);
+		
+				channel_png_savePath = inputDir+"/channel_images/RAW/pngs/"+fov_name+"_C"+stack_channel+"_RAW.png";
+				saveAs("png", channel_png_savePath);
+		    }
 		}
 
 		 // Create a composite image from the hyperstack
@@ -200,10 +219,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 		run("Make Composite");
 		
 		print("Saving composite image as ");
-		tif_savePath = inputDir+"/composite_images/RAW/tifs/"+fov_name+"_composite.tif";
+		tif_savePath = inputDir+"/composite_images/RAW/tifs/"+fov_name+"_RAW_composite.tif";
 		saveAs("Tiff", tif_savePath);
 		
-		png_savePath = inputDir+"/composite_images/RAW/pngs/"+fov_name+"_composite.png";
+		png_savePath = inputDir+"/composite_images/RAW/pngs/"+fov_name+"_RAW_composite.png";
 		saveAs("png", png_savePath);
 		//Closing the images for this field of view to start it fresh for the next one
 		close("*");
@@ -215,10 +234,14 @@ for (i = 0; i < lengthOf(fileList); i++){
 /////////// Main Analysis Loop for MANUALLY ADJUSTED /////////////////
 ////////////////////////////////////////////////
 if (manually_adjusted_boolean == 1){
-File.makeDirectory(inputDir + "/composite_images");
 File.makeDirectory(inputDir + "/composite_images/MANUALLY_ADJUSTED");
 File.makeDirectory(inputDir+"/composite_images/MANUALLY_ADJUSTED/tifs");
 File.makeDirectory(inputDir+"/composite_images/MANUALLY_ADJUSTED/pngs");
+
+File.makeDirectory(inputDir+"/channel_images/MANUALLY_ADJUSTED");
+File.makeDirectory(inputDir+"/channel_images/MANUALLY_ADJUSTED/tifs/");
+File.makeDirectory(inputDir+"/channel_images/MANUALLY_ADJUSTED/pngs/");
+
 
 for (i = 0; i < lengthOf(fileList); i++){
 	
@@ -256,6 +279,7 @@ for (i = 0; i < lengthOf(fileList); i++){
 		    print("Manually enhancing Contrast for "+imageName_split_by_channel[0] + selected_channels[j] + imageName_split_by_channel[1]);
 		    setMinAndMax(selected_min_thresholds[j], selected_max_thresholds[j]);
 		    run("Apply LUT");
+		    
 		}
 		
 		
@@ -282,6 +306,15 @@ for (i = 0; i < lengthOf(fileList); i++){
 			} else {
 			        print("Using default image color for channel: " + selected_channels[j]);
 			} 
+			
+			if (export_each_channel_boolean == true){
+		    	print("Saving channel image as ");
+				channel_tif_savePath = inputDir+"/channel_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"_C"+stack_channel+"_MANUALLY_ADJUSTED.tif";
+				saveAs("Tiff", channel_tif_savePath);
+		
+				channel_png_savePath = inputDir+"/channel_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"_C"+stack_channel+"_MANUALLY_ADJUSTED.png";
+				saveAs("png", channel_png_savePath);
+		    }
 		}
 
 		 // Create a composite image from the hyperstack
@@ -289,10 +322,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 		run("Make Composite");
 		
 		print("Saving composite image as ");
-		tif_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"_composite.tif";
+		tif_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/tifs/"+fov_name+"_MANUALLY_ADJUSTED_composite.tif";
 		saveAs("Tiff", tif_savePath);
 		
-		png_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"_composite.png";
+		png_savePath = inputDir+"/composite_images/MANUALLY_ADJUSTED/pngs/"+fov_name+"_MANUALLY_ADJUSTED_composite.png";
 		saveAs("png", png_savePath);
 		//Closing the images for this field of view to start it fresh for the next one
 		close("*");
@@ -317,10 +350,14 @@ for (i = 0; i < lengthOf(fileList); i++){
 /////////// Main Analysis Loop for AUTOMATICALLY ADJUSTED /////////////////
 ////////////////////////////////////////////////
 if (automatically_adjusted_boolean == 1){
-File.makeDirectory(inputDir + "/composite_images");
 File.makeDirectory(inputDir + "/composite_images/AUTOMATICALLY_ADJUSTED");
 File.makeDirectory(inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/tifs");
 File.makeDirectory(inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/pngs");
+
+File.makeDirectory(inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED");
+File.makeDirectory(inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/tifs/");
+File.makeDirectory(inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/pngs/");
+
 
 for (i = 0; i < lengthOf(fileList); i++){
 	
@@ -383,6 +420,15 @@ for (i = 0; i < lengthOf(fileList); i++){
 			} else {
 			        print("Using default image color for channel: " + selected_channels[j]);
 			} 
+			
+			if (export_each_channel_boolean == true){
+		    	print("Saving channel image as ");
+				channel_tif_savePath = inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"_C"+stack_channel+"_AUTOMATICALLY_ADJUSTED.tif";
+				saveAs("Tiff", channel_tif_savePath);
+		
+				channel_png_savePath = inputDir+"/channel_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"_C"+stack_channel+"__AUTOMATICALLY_ADJUSTED.png";
+				saveAs("png", channel_png_savePath);
+		    }
 		}
 
 		 // Create a composite image from the hyperstack
@@ -390,10 +436,10 @@ for (i = 0; i < lengthOf(fileList); i++){
 		run("Make Composite");
 		
 		print("Saving composite image as ");
-		tif_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"_composite.tif";
+		tif_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/tifs/"+fov_name+"_AUTOMATICALLY_ADJUSTED_composite.tif";
 		saveAs("Tiff", tif_savePath);
 		
-		png_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"_composite.png";
+		png_savePath = inputDir+"/composite_images/AUTOMATICALLY_ADJUSTED/pngs/"+fov_name+"_AUTOMATICALLY_ADJUSTED_composite.png";
 		saveAs("png", png_savePath);
 		//Closing the images for this field of view to start it fresh for the next one
 		close("*");
