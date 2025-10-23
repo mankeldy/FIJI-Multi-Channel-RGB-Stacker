@@ -115,7 +115,7 @@ print("-----Running------");
 print("Here are your variables:");
 print("path = ", inputDir);
 for (i=0; i<lengthOf(selected_channels); i++) {
-	print("C",i+1," = ",selected_channels[i],"    Colors =",selected_colors[i], "         Thresholds = [",selected_min_thresholds[i],",",selected_max_threshold,"]");
+	print("C",i+1," = ",selected_channels[i],"    Colors =",selected_colors[i], "         Thresholds = [",selected_min_thresholds[i],",",selected_max_thresholds[i],"]");
 }
 
 
