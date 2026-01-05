@@ -12,7 +12,7 @@ The FIJI-Multi-Channel-RGB-Stacker plugin automatically processes multi-channel 
 7. Upon running the script, it should open to a GUI like this:
 
 <p align="center">
-<img src="/tutorial/Multi-channel-RGB-ui-as_of_01-05-2025.JPG" alt="GUI Example" width="500px"/>
+<img src="/tutorial/Multi-channel-RGB-ui-as_of_01-05-2025.jpg" alt="GUI Example" width="500px"/>
 </p>
 
 ## Using the Plugin
